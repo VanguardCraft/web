@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Apertura del Servidor | VanguardCraft</title>
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-container">
+    <h1>VanguardCraft</h1>
+    <nav>
+      <ul>
+        <li><a href="apertura.html">Apertura</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="discord.html">Discord</a></li>
+        <li><a href="mods-tlauncher.html">TLauncher</a></li>
+        <li><a href="mods-curseforge.html">CurseForge</a></li>
+        <li><a href="tienda.html">Tienda</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section>
+  <h2 class="section-title">🚀 Apertura del servidor</h2>
+
+  <div id="countdown" style="font-size:2.5rem; margin:30px 0;">
+    Cargando cuenta atrás...
+  </div>
+
+  <button id="waitBtn" class="btn">
+    🔔 Estoy esperando el servidor
+  </button>
+
+  <p style="margin-top:20px; font-size:1.2rem;">
+    👥 Personas esperando: <strong><span id="count">0</span></strong>
+  </p>
+</section>
+
+<footer>
+  © 2026 VanguardCraft
+</footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+/* ===== FECHA DE APERTURA ===== */
+const launchDate = new Date("2026-01-18T16:00:00").getTime();
+
+/* ===== ELEMENTOS ===== */
+const countdown = document.getElementById("countdown");
+const btn = document.getElementById("waitBtn");
+const countEl = document.getElementById("count");
+
+/* ===== CUENTA ATRÁS ===== */
+setInterval(() => {
+  const now = Date.now();
+  const diff = launchDate - now;
+
+  if (diff <= 0) {
+    countdown.textContent = "🎉 ¡El servidor ya está ABIERTO!";
+    btn.style.display = "none";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  countdown.textContent =
+    `⏳ ${days} días · ${hours} h · ${minutes} min · ${seconds} s`;
+}, 1000);
+
+/* ===== FIREBASE CONFIG ===== */
+const firebaseConfig = {
+  apiKey: "AIzaSyDzK3y8gV8noUqW6zH5pI61AItYPeOwuOk",
+  authDomain: "vanguardcraft-33937.firebaseapp.com",
+  databaseURL: "https://vanguardcraft-33937-default-rtdb.firebaseio.com",
+  projectId: "vanguardcraft-33937",
+  storageBucket: "vanguardcraft-33937.firebasestorage.app",
+  messagingSenderId: "1018344920530",
+  appId: "1:1018344920530:web:2b90686c798ce9bc72640b"
+};
+
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const contadorRef = database.ref('contador');
+const usersRef = database.ref('usuarios');
+
+/* ===== GENERAR ID ÚNICO PARA EL VISITANTE ===== */
+let visitorId = localStorage.getItem("visitorId");
+if (!visitorId) {
+  visitorId = "user_" + Math.random().toString(36).substring(2, 10);
+  localStorage.setItem("visitorId", visitorId);
+}
+
+/* ===== MOSTRAR CONTADOR EN TIEMPO REAL ===== */
+contadorRef.on('value', (snapshot) => {
+  const valor = snapshot.val() || 0;
+  countEl.textContent = valor;
+});
+
+/* ===== BLOQUEAR BOTÓN SI YA PULSÓ ===== */
+usersRef.child(visitorId).once('value', (snap) => {
+  if (snap.exists()) {
+    btn.disabled = true;
+    btn.textContent = "✅ Ya estás esperando";
+  }
+});
+
+/* ===== CLICK DEL BOTÓN ===== */
+btn.onclick = () => {
+  // Evitar doble click
+  btn.disabled = true;
+  
+  // Incrementar contador de forma segura
+  contadorRef.transaction((current) => {
+    return (current || 0) + 1;
+  });
+
+  // Guardar que este usuario ya pulsó
+  usersRef.child(visitorId).set(true);
+
+  btn.textContent = "✅ Ya estás esperando";
+};
+</script>
+
+</body>
+</html>
