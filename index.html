@@ -4,16 +4,14 @@
   <meta charset="UTF-8">
   <title>Home | VanguardCraft</title>
   <link rel="stylesheet" href="CSS/style.css">
-  <link rel="icon" type="image/png" href="CSS/favicom.png">
+  <link rel="icon" type="image/png" href="CSS/favicon.png">
 </head>
 <body>
 
 <header>
   <div class="header-container">
-    <!-- Logo / Título del servidor -->
     <h1>VanguardCraft</h1>
 
-    <!-- Menú de navegación -->
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -26,10 +24,9 @@
   </div>
 </header>
 
-
-
 <section>
   <h2 class="section-title">Bienvenido a nuestro servidor</h2>
+
   <p class="section-content">
     Bienvenido a <strong>VanguardCraft</strong>, un servidor Java <strong>1.20.1</strong>
     enfocado en la diversión, estabilidad y una comunidad sana.
@@ -61,11 +58,124 @@
       </ul>
     </div>
   </div>
+
+  <!-- TABLÓN DE ANUNCIOS PROFESIONAL -->
+  <div class="announcements-section">
+
+    <div class="announcements-header">
+      <h3>Tablón de anuncios</h3>
+      <p>Estado del servidor · Eventos · Comunicados</p>
+    </div>
+
+    <div class="announcements-grid">
+
+      <!-- ESTADO DEL SERVIDOR (AUTOMÁTICO) -->
+      <div class="announcement-card status" id="server-status">
+        <div class="announcement-top">
+          <span class="announcement-icon" id="status-icon">⏳</span>
+          <span class="announcement-title" id="status-title">Comprobando estado...</span>
+        </div>
+
+        <p class="announcement-text" id="status-text">
+          Consultando estado del servidor.
+        </p>
+
+        <div class="announcement-footer">
+          Última actualización: <span id="status-time">--</span>
+        </div>
+      </div>
+
+      <!-- EVENTO -->
+        <div class="announcement-card event auto-date">
+        <div class="announcement-top">
+          <span class="announcement-icon">🛠️</span>
+          <span class="announcement-title">Actualización de los MODS!</span>
+        </div>
+
+  <p class="announcement-text">
+    <p>Hemos quitado los siguientes mods!!</p>
+      <br>
+    <p>❌ DecoCraft</p>
+    <p>❌ MineColonies</p> 
+    <p>❌ Structurize</p>
+    <p>❌ Domum Ornamentum</p>
+    <p>❌ BlockUI</p>
+      <br>
+  </p>
+
+  <div class="announcement-footer">
+    Actualizado: <span class="date-output"></span>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+
 </section>
 
 <footer>
   © 2026 VanguardCraft
 </footer>
+
+<!-- SCRIPT ESTADO SERVIDOR -->
+<script>
+const SERVER_IP = "VanguardCraft.playwn.co";
+const API_URL = `https://api.mcsrvstat.us/2/${SERVER_IP}`;
+
+async function checkServerStatus() {
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+
+    const card = document.getElementById("server-status");
+    const icon = document.getElementById("status-icon");
+    const title = document.getElementById("status-title");
+    const text = document.getElementById("status-text");
+    const time = document.getElementById("status-time");
+
+    time.textContent = new Date().toLocaleString("es-ES");
+
+    if (data.online) {
+      card.className = "announcement-card status online";
+      icon.textContent = "🟢";
+      title.textContent = "Servidor ONLINE";
+      text.textContent = `Jugadores: ${data.players.online}/${data.players.max}`;
+    } else {
+      card.className = "announcement-card status offline";
+      icon.textContent = "🟠";
+      title.textContent = "Servidor en Mantenimiento";
+      text.textContent = "El servidor está en periodo de mantenimiento. Pronto estará disponible!!";
+    }
+  } catch {
+    console.log("Error consultando servidor");
+  }
+}
+
+// Aplica fecha automática a todas las tarjetas marcadas
+checkServerStatus();
+setInterval(checkServerStatus, 60000);
+</script>
+<script>
+function getFormattedDate() {
+  const now = new Date();
+  return now.toLocaleString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+// Aplica fecha automática a todas las tarjetas marcadas
+document.querySelectorAll(".auto-date").forEach(card => {
+  const dateSpan = card.querySelector(".date-output");
+  if (dateSpan) {
+    dateSpan.textContent = getFormattedDate();
+  }
+});
+</script>
 
 </body>
 </html>

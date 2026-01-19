@@ -207,3 +207,96 @@ footer {
     gap: 20px;
   }
 }
+/* ===== TABLÓN DE ANUNCIOS ===== */
+.announcements-section {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.announcements-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.announcements-header h3 {
+  font-size: 2.2rem;
+  color: #00bfff;
+}
+
+.announcements-header p {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.announcements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.announcement-card {
+  background: rgba(22,22,22,0.95);
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.announcement-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.85);
+}
+
+.announcement-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.announcement-icon {
+  font-size: 1.4rem;
+}
+
+.announcement-title {
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+
+.announcement-text {
+  font-size: 0.95rem;
+  margin-bottom: 18px;
+}
+
+.announcement-footer {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 10px;
+}
+
+/* ESTADOS */
+.status.online {
+  border-left: 5px solid #00c853;
+}
+
+.status.offline {
+  border-left: 5px solid #d50000;
+}
+
+.event {
+  border-left: 5px solid #ffab00;
+}
+
+
+/* MANTENIMIENTO */
+.status.maintenance {
+  border-left: 5px solid #ff9800;
+}
+
+.status.maintenance .announcement-title {
+  color: #ffb74d;
+}
