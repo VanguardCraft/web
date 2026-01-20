@@ -89,11 +89,11 @@
         <div class="announcement-card event auto-date">
         <div class="announcement-top">
           <span class="announcement-icon">🛠️</span>
-          <span class="announcement-title">Mantenimiento Activo!</span>
+          <span class="announcement-title"><b>Mantenimiento Finalizado!</b></span>
         </div>
 
   <p class="announcement-text">
-    <p>Desde las 8:00 am hora España a comenzado el mantenimiento del Servidor de VanguardCraft. Pronto se volveran a restablecer los servicios y estará disponible.</p>
+    <p>El mantenimiento ha finalizado!</p>
       <br>
     
       <br>
@@ -137,12 +137,12 @@ async function checkServerStatus() {
       icon.textContent = "🟢";
       title.textContent = "Servidor ONLINE";
       text.textContent = `Jugadores: ${data.players.online}/${data.players.max}`;
-      text.textContent = "El servidor está en periodo de mantenimiento. Pronto estará disponible!!";
+      //text.textContent = "El servidor está en periodo de mantenimiento. Pronto estará disponible!!";
     } else {
       card.className = "announcement-card status offline";
       icon.textContent = "🔴";
       title.textContent = "Servidor OFFLINE";
-      text.textContent = "El servidor está en periodo de mantenimiento. Pronto estará disponible!!";
+      text.textContent = "El servidor no está disponible.";
     }
   } catch {
     console.log("Error consultando servidor");
