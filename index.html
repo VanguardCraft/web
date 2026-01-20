@@ -89,17 +89,13 @@
         <div class="announcement-card event auto-date">
         <div class="announcement-top">
           <span class="announcement-icon">🛠️</span>
-          <span class="announcement-title">Actualización de los MODS!</span>
+          <span class="announcement-title">Mantenimiento Activo!</span>
         </div>
 
   <p class="announcement-text">
-    <p>Hemos quitado los siguientes mods!!</p>
+    <p>Desde las 8:00 am hora España a comenzado el mantenimiento del Servidor de VanguardCraft. Pronto se volveran a restablecer los servicios y estará disponible.</p>
       <br>
-    <p>❌ DecoCraft</p>
-    <p>❌ MineColonies</p> 
-    <p>❌ Structurize</p>
-    <p>❌ Domum Ornamentum</p>
-    <p>❌ BlockUI</p>
+    
       <br>
   </p>
 
@@ -141,10 +137,11 @@ async function checkServerStatus() {
       icon.textContent = "🟢";
       title.textContent = "Servidor ONLINE";
       text.textContent = `Jugadores: ${data.players.online}/${data.players.max}`;
+      text.textContent = "El servidor está en periodo de mantenimiento. Pronto estará disponible!!";
     } else {
       card.className = "announcement-card status offline";
-      icon.textContent = "🟠";
-      title.textContent = "Servidor en Mantenimiento";
+      icon.textContent = "🔴";
+      title.textContent = "Servidor OFFLINE";
       text.textContent = "El servidor está en periodo de mantenimiento. Pronto estará disponible!!";
     }
   } catch {
